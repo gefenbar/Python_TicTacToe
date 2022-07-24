@@ -9,7 +9,13 @@ player2_tiles = []
 
 def start_game():
     global is_game_on
+    global turns_count
+    global player1_tiles
+    global player2_tiles
     is_game_on = True
+    player1_tiles.clear()
+    player2_tiles.clear()
+    turns_count = 0
     board = ['-', 1, 2, 3, 4, 5, 6, 7, 8, 9]
     player1 = '-'
     player2 = '-'
@@ -70,19 +76,16 @@ def player_move(board, player1, player2, curr_player):
 def check_win(board, player1, player2, player_tiles, curr_player):
     global is_game_on
     global turns_count
-    global player1_tiles
-    global player2_tiles
     turns_count += 1
     for combination in win_combinations:
-        if combination.issubset(player_tiles) or turns_count == 9:
-            if combination.issubset(player_tiles):
-                print(f"player {curr_player} is the winner")
-            else:
-                print("It's a draw!")
-            player1_tiles = []
-            player2_tiles = []
-            turns_count = 0
+        if combination.issubset(player_tiles):
             is_game_on = False
+            print(f"player {curr_player} is the winner")
+            break
+
+    if turns_count == 9 and is_game_on:
+        print("It's a draw!")
+        is_game_on = False
 
     if(curr_player == player1):
         curr_player = player2
