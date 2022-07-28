@@ -1,4 +1,5 @@
-
+'''TICTACTOE'''
+import sys
 win_combinations = [{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {
     1, 4, 7}, {2, 5, 8}, {3, 6, 9}, {1, 5, 9}, {3, 5, 7}]
 is_game_on = True
@@ -8,6 +9,7 @@ player2_tiles = []
 
 
 def start_game():
+    '''INITIALIZE'''
     global is_game_on
     global turns_count
     global player1_tiles
@@ -21,14 +23,14 @@ def start_game():
     player2 = '-'
     ready_to_play = '-'
     print("**Welcome to Tic Tac Toe Game**")
-    while(ready_to_play not in ['Y', 'N']):
+    while ready_to_play not in ['Y', 'N']:
         ready_to_play = input("Are you ready to play? Y or N ").upper()
-    if(ready_to_play == 'N'):
+    if ready_to_play == 'N':
         print("**GoodBye**")
-        exit()
+        sys.exit()
     while player1 not in ['X', 'O']:
         player1 = input("Hello Player 1! Do you want to be X or O? ").upper()
-    if(player1 == 'X'):
+    if player1 == 'X':
         player2 = 'O'
     else:
         player2 = 'X'
@@ -39,6 +41,7 @@ def start_game():
 
 
 def display_board(board):
+    '''PRINT BOARD'''
     print('-------------')
     print('|', board[1], '|', board[2], '|', board[3], '|')
     print('-------------')
@@ -49,6 +52,7 @@ def display_board(board):
 
 
 def player_move(board, player1, player2, curr_player):
+    '''GAMEPLAY'''
     global player1_tiles
     global player2_tiles
     if not is_game_on:
@@ -59,12 +63,12 @@ def player_move(board, player1, player2, curr_player):
         temp_choice = ''
         while choice not in range(1, 10) or board[choice] == 'X' or board[choice] == 'O':
             temp_choice = input("Choose an empty tile: ")
-            if(temp_choice.isdigit() == True):
+            if temp_choice.isdigit():
                 choice = int(temp_choice)
         board[choice] = curr_player
         display_board(board)
 
-        if(curr_player == player1):
+        if curr_player == player1:
             player1_tiles.append(choice)
             check_win(board, player1, player2, player1_tiles, curr_player)
 
@@ -74,6 +78,7 @@ def player_move(board, player1, player2, curr_player):
 
 
 def check_win(board, player1, player2, player_tiles, curr_player):
+    '''CHECK WIN/LOSE/DRAW'''
     global is_game_on
     global turns_count
     turns_count += 1
@@ -87,7 +92,7 @@ def check_win(board, player1, player2, player_tiles, curr_player):
         print("It's a draw!")
         is_game_on = False
 
-    if(curr_player == player1):
+    if curr_player == player1:
         curr_player = player2
     else:
         curr_player = player1
